@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Piyush-Movies - Stream Movies & TV Shows Online</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="assest/piyush-web-png.png">
+    <link rel="stylesheet" href="Movie-css-js/style.css?v=3.3">
+    
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+                   <div class="search-container">
+                <div class="input-group">
+                    <input style="color: white;" type="text" class="form-control search-input" id="searchInput" 
+                           placeholder="Search for movies or TV shows...">
+                    <button class="btn search-btn" type="button" id="searchBtn">
+                        <i class="fas fa-search me-2 "></i>Search
+                    </button>
+                </div>
+            </div>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="showSection('home')">
+                            <i class="fas fa-home"></i>
+                            Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="showSection('movies')">
+                            <i class="fas fa-film"></i>
+                            Movies
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="showSection('tv')">
+                            <i class="fas fa-tv"></i>
+                            TV Shows
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="genreDropdown" role="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-list"></i>
+                            Genres
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#" onclick="filterByGenre(28, 'Action')">Action</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="filterByGenre(35, 'Comedy')">Comedy</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="filterByGenre(18, 'Drama')">Drama</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="filterByGenre(27, 'Horror')">Horror</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="filterByGenre(878, 'Sci-Fi')">Sci-Fi</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="filterByGenre(53, 'Thriller')">Thriller</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="filterByGenre(10749, 'Romance')">Romance</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="filterByGenre(16, 'Animation')">Animation</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item ms-auto">
+                        <button>
+                            <a class="admin-link" href="/li-project-555555 - Copy/index.html">Admin Login</a>
+                            <div class="star-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd" viewBox="0 0 784.11 815.53" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                    <defs></defs>
+                                    <g id="Layer_x0020_1">
+                                        <metadata id="CorelCorpID_0Corel-Layer"></metadata>
+                                        <path class="fil0" d="M392.05 0c-20.9,210.08 -184.06,378.41 -392.05,407.78 207.96,29.37 371.12,197.68 392.05,407.74 20.93,-210.06 184.09,-378.37 392.05,-407.74 -207.98,-29.38 -371.16,-197.69 -392.06,-407.78z"></path>
+                                    </g>
+                                </svg>
+                            </div>
+                            <div class="star-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd" viewBox="0 0 784.11 815.53" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                    <defs></defs>
+                                    <g id="Layer_x0020_1">
+                                        <metadata id="CorelCorpID_0Corel-Layer"></metadata>
+                                        <path class="fil0" d="M392.05 0c-20.9,210.08 -184.06,378.41 -392.05,407.78 207.96,29.37 371.12,197.68 392.05,407.74 20.93,-210.06 184.09,-378.37 392.05,-407.74 -207.98,-29.38 -371.16,-197.69 -392.06,-407.78z"></path>
+                                    </g>
+                                </svg>
+                            </div>
+                            <div class="star-3">
+                                <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd" viewBox="0 0 784.11 815.53" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                    <defs></defs>
+                                    <g id="Layer_x0020_1">
+                                        <metadata id="CorelCorpID_0Corel-Layer"></metadata>
+                                        <path class="fil0" d="M392.05 0c-20.9,210.08 -184.06,378.41 -392.05,407.78 207.96,29.37 371.12,197.68 392.05,407.74 20.93,-210.06 184.09,-378.37 392.05,-407.74 -207.98,-29.38 -371.16,-197.69 -392.06,-407.78z"></path>
+                                    </g>
+                                </svg>
+                            </div>
+                            <div class="star-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd" viewBox="0 0 784.11 815.53" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                    <defs></defs>
+                                    <g id="Layer_x0020_1">
+                                        <metadata id="CorelCorpID_0Corel-Layer"></metadata>
+                                        <path class="fil0" d="M392.05 0c-20.9,210.08 -184.06,378.41 -392.05,407.78 207.96,29.37 371.12,197.68 392.05,407.74 20.93,-210.06 184.09,-378.37 392.05,-407.74 -207.98,-29.38 -371.16,-197.69 -392.06,-407.78z"></path>
+                                    </g>
+                                </svg>
+                            </div>
+                            <div class="star-5">
+                                <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd" viewBox="0 0 784.11 815.53" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                    <defs></defs>
+                                    <g id="Layer_x0020_1">
+                                        <metadata id="CorelCorpID_0Corel-Layer"></metadata>
+                                        <path class="fil0" d="M392.05 0c-20.9,210.08 -184.06,378.41 -392.05,407.78 207.96,29.37 371.12,197.68 392.05,407.74 20.93,-210.06 184.09,-378.37 392.05,-407.74 -207.98,-29.38 -371.16,-197.69 -392.06,-407.78z"></path>
+                                    </g>
+                                </svg>
+                            </div>
+                            <div class="star-6">
+                                <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd" viewBox="0 0 784.11 815.53" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                    <defs></defs>
+                                    <g id="Layer_x0020_1">
+                                        <metadata id="CorelCorpID_0Corel-Layer"></metadata>
+                                        <path class="fil0" d="M392.05 0c-20.9,210.08 -184.06,378.41 -392.05,407.78 207.96,29.37 371.12,197.68 392.05,407.74 20.93,-210.06 184.09,-378.37 392.05,-407.74 -207.98,-29.38 -371.16,-197.69 -392.06,-407.78z"></path>
+                                    </g>
+                                </svg>
+                            </div>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section" id="heroSection">
+        <div class="container">
+            <h1 class="hero-title">
+                Welcome to <span class="gradient-text">Piyush-Movies</span>
+            </h1>
+            <p class="hero-subtitle">
+                Found a broken link or looking for a specific movie? Hit  '+ Request Movie' and submit your request......🎬
+
+            </p>
+            <button>
+                <a class="nav-link" href="#" onclick="showSection('request')">
+                            <i class="fas fa-plus-circle"></i>
+                            Request Movie
+                        </a>
+            </button>
+          
+              <button style="margin-top: 4vh;">
+                <a style="text-decoration: none; color: rgb(66, 69, 247);" class="nav-linkv" href="/Req/request.html">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-patch-check-fill" viewBox="0 0 16 16">
+  <path d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01zm.287 5.984-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708.708"/>
+</svg>
+                            Access Your Request
+                        </a>
+            </button>
+        </div>
+    </section>
+
+    <!-- Main Content Container -->
+    <div class="container-fluid main-container mt-4">
+        <!-- Home Section -->
+        <div id="homeSection" class="content-section active">
+            <!-- Trending Movies -->
+            <section class="mb-5">
+                <h2 class="section-title">
+                    <span class="trending-title">🔥 Trending This Week</span>
+                </h2>
+                <div id="trendingMovies" class="grid-responsive">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        Loading trending movies...
+                    </div>
+                </div>
+            </section>
+
+            <!-- Comedy Movies -->
+            <section class="mb-5">
+                <h2 class="section-title">
+                    <span class="comedy-title">😂 Comedy Movies</span>
+                </h2>
+                <div id="comedyMovies" class="grid-responsive">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        Loading comedy movies...
+                    </div>
+                </div>
+            </section>
+
+            <!-- Bengali Movies -->
+            <section class="mb-5">
+                <h2 class="section-title">
+                    <span class="bengali-title">🎬 Bengali Movies</span>
+                </h2>
+                <div id="bengaliMovies" class="grid-responsive">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        Loading Bengali movies...
+                    </div>
+                </div>
+            </section>
+
+            <!-- Popular Content Tabs -->
+            <section>
+                <ul class="nav nav-tabs" id="contentTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="movies-tab" data-bs-toggle="tab" data-bs-target="#movies" 
+                                type="button" role="tab">
+                            <i class="fas fa-film me-2"></i>Popular Movies
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="tv-tab" data-bs-toggle="tab" data-bs-target="#tv" 
+                                type="button" role="tab">
+                            <i class="fas fa-tv me-2"></i>Popular TV Shows
+                        </button>
+                    </li>
+                </ul>
+
+                <div class="tab-content" id="contentTabsContent">
+                    <!-- Movies Tab -->
+                    <div class="tab-pane fade show active" id="movies" role="tabpanel">
+                        <div id="popularMovies" class="grid-responsive">
+                            <div class="loading">
+                                <div class="spinner"></div>
+                                Loading popular movies...
+                            </div>
+                        </div>
+                        <div class="infinite-loading" id="moviesInfiniteLoading">
+                            <div class="spinner"></div>
+                            Loading more movies...
+                        </div>
+                    </div>
+
+                    <!-- TV Shows Tab -->
+                    <div class="tab-pane fade" id="tv" role="tabpanel">
+                        <div id="popularTVShows" class="grid-responsive">
+                            <div class="loading">
+                                <div class="spinner"></div>
+                                Loading popular TV shows...
+                            </div>
+                        </div>
+                        <div class="infinite-loading" id="tvInfiniteLoading">
+                            <div class="spinner"></div>
+                            Loading more TV shows...
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Movies Section -->
+        <div id="moviesSection" class="content-section">
+            <h2 class="section-title">Popular Movies</h2>
+            <div id="moviesGrid" class="grid-responsive">
+                <div class="loading">
+                    <div class="spinner"></div>
+                    Loading movies...
+                </div>
+            </div>
+            <div class="infinite-loading" id="moviesSectionInfiniteLoading">
+                <div class="spinner"></div>
+                Loading more movies...
+            </div>
+        </div>
+
+        <!-- TV Shows Section -->
+        <div id="tvSection" class="content-section">
+            <h2 class="section-title">Popular TV Shows</h2>
+            <div id="tvGrid" class="grid-responsive">
+                <div class="loading">
+                    <div class="spinner"></div>
+                    Loading TV shows...
+                </div>
+            </div>
+            <div class="infinite-loading" id="tvSectionInfiniteLoading">
+                <div class="spinner"></div>
+                Loading more TV shows...
+            </div>
+        </div>
+
+        <!-- Movie Request Section -->
+        <div id="requestSection" class="content-section">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="request-form-container">
+                            <h2 class="section-title text-center mb-4">
+                                <i class="fas fa-plus-circle me-2"></i>
+                                <span class="gradient-text">Request a Movie</span>
+                            </h2>
+                            <h3 class="text-center  mb-4">Request Your Fvt Movie Upload soon.... </h3>
+                            
+                            <form id="movieRequestForm" class="request-form">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="userName" class="form-label">
+                                            <i class="fas fa-user me-2"></i>Your Name *
+                                        </label>
+                                        <input type="text" class="form-control" id="userName" name="name" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="fnamel" class="form-label">
+                                            <i class="fas fa-envelope me-2"></i>Movie Name
+                                        </label>
+                                        <input type="fname" class="form-control" id="movie" name="movie" required>
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="movieTitle" class="form-label">
+                                            <i class="fas fa-film me-2"></i>Movie Title *
+                                        </label>
+                                        <input type="text" class="form-control" id="movieTitle" name="movie_title" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="releaseYear" class="form-label">
+                                            <i class="fas fa-calendar me-2"></i>Release Year
+                                        </label>
+                                        <input type="number" class="form-control" id="releaseYear" name="release_year" min="1900" max="2030">
+                                    </div>
+                                </div>
+                                
+                                      
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                              
+                                <!-- Hidden field for Web3Forms -->
+                                <input type="hidden" name="access_key" value="108ed3e8-e32f-4b50-be8e-2c59ee895c9a">
+                                <input type="hidden" name="subject" value="New Movie Request from Piyush-Movies">
+                                <input type="hidden" name="from_name" value="Piyush-Movies Request Form">
+                                
+                                <div class="text-center">
+                                    <button type="submit" class="btn request-submit-btn" id="submitBtn">
+                                        <i class="fas fa-paper-plane me-2"></i>
+                                        Submit Request
+                                    </button>
+                                </div>
+                            </form>
+                            
+                            <!-- Success/Error Messages -->
+                            <div id="formMessage" class="mt-3" style="display: none;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Search Results Section -->
+        <div id="searchSection" class="content-section">
+            <h2 class="section-title" id="searchTitle">Search Results</h2>
+            <div id="searchResults" class="grid-responsive"></div>
+            <div class="infinite-loading" id="searchInfiniteLoading">
+                <div class="spinner"></div>
+                Loading more results...
+            </div>
+        </div>
+
+        <!-- Genre Results Section -->
+        <div id="genreSection" class="content-section">
+            <h2 class="section-title" id="genreTitle">Genre Results</h2>
+            <div id="genreResults" class="grid-responsive"></div>
+            <div class="infinite-loading" id="genreInfiniteLoading">
+                <div class="spinner"></div>
+                Loading more results...
+            </div>
+        </div>
+    </div>
+
+    <!-- Media Details Modal -->
+    <div class="modal fade" id="mediaModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitle">Media Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="modalBody">
+                    <!-- Media details will be loaded here -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Player Modal -->
+    <div class="modal fade player-modal" id="playerModal" tabindex="-1">
+        <div class="modal-dialog modal-fullscreen-lg-down">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="playerTitle">Now Playing</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-0">
+                    <iframe id="playerIframe" class="player-iframe" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Piyush-Movies. </p>
+            <p class="mt-2"><small>Website Owner piyush98981</small></p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="Movie-css-js/app.js?v=3.3"></script>
+</body>
+</html>
