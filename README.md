@@ -66,7 +66,7 @@ Once submitted, the request is securely sent using [Web3Forms](https://web3forms
 
 ## 🧑‍💻 Author
 
-**Piyush Kumar**  
+**Piyush Sarkar**  
 Website Owner & Developer  
 📧 *piyush98981*
 
