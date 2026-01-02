@@ -4,6 +4,32 @@ const IMAGE_BASE_URL = process.env.NEXT_PUBLIC_TMDB_IMAGE_BASE_URL;
 const BACKDROP_BASE_URL = process.env.NEXT_PUBLIC_TMDB_BACKDROP_BASE_URL;
 const VIDSRC_BASE_URL = process.env.NEXT_PUBLIC_VIDSRC_BASE_URL;
 
+// Helper for robust fetching with retry logic
+async function fetchWithRetry(url: string, options: RequestInit = {}, retries = 3) {
+	try {
+		const response = await fetch(url, {
+			...options,
+			headers: {
+				...options.headers,
+				"Content-Type": "application/json",
+			},
+		});
+
+		if (!response.ok) {
+			throw new Error(`HTTP error! status: ${response.status}`);
+		}
+
+		return response;
+	} catch (error) {
+		if (retries > 0) {
+			console.warn(`⚠️ Request failed, retrying... (${retries} attempts left)`);
+			await new Promise((resolve) => setTimeout(resolve, 1000));
+			return fetchWithRetry(url, options, retries - 1);
+		}
+		throw error;
+	}
+}
+
 export interface Movie {
 	id: number;
 	title: string;
@@ -32,13 +58,12 @@ export interface MovieDetails extends Movie {
 
 export async function getTrendingMovies(timeWindow: "day" | "week" = "week") {
 	try {
-		const response = await fetch(
+		const response = await fetchWithRetry(
 			`${API_BASE_URL}/trending/movie/${timeWindow}?api_key=${API_KEY}`,
 			{
 				next: { revalidate: 3600 },
 			}
 		);
-		if (!response.ok) throw new Error("Failed to fetch trending movies");
 		const data = await response.json();
 		return data.results as Movie[];
 	} catch (error) {
@@ -49,13 +74,12 @@ export async function getTrendingMovies(timeWindow: "day" | "week" = "week") {
 
 export async function getLatestMovies() {
 	try {
-		const response = await fetch(
+		const response = await fetchWithRetry(
 			`${API_BASE_URL}/movie/now_playing?api_key=${API_KEY}&language=en-US&page=1`,
 			{
 				next: { revalidate: 3600 },
 			}
 		);
-		if (!response.ok) throw new Error("Failed to fetch latest movies");
 		const data = await response.json();
 		return data.results as Movie[];
 	} catch (error) {
@@ -66,13 +90,12 @@ export async function getLatestMovies() {
 
 export async function getPopularMovies() {
 	try {
-		const response = await fetch(
+		const response = await fetchWithRetry(
 			`${API_BASE_URL}/movie/popular?api_key=${API_KEY}&language=en-US&page=1`,
 			{
 				next: { revalidate: 3600 },
 			}
 		);
-		if (!response.ok) throw new Error("Failed to fetch popular movies");
 		const data = await response.json();
 		return data.results as Movie[];
 	} catch (error) {
@@ -83,13 +106,12 @@ export async function getPopularMovies() {
 
 export async function getGenres() {
 	try {
-		const response = await fetch(
+		const response = await fetchWithRetry(
 			`${API_BASE_URL}/genre/movie/list?api_key=${API_KEY}&language=en-US`,
 			{
 				next: { revalidate: 86400 },
 			}
 		);
-		if (!response.ok) throw new Error("Failed to fetch genres");
 		const data = await response.json();
 		return data.genres as Genre[];
 	} catch (error) {
@@ -101,13 +123,12 @@ export async function getGenres() {
 export async function searchMovies(query: string) {
 	if (!query.trim()) return [];
 	try {
-		const response = await fetch(
+		const response = await fetchWithRetry(
 			`${API_BASE_URL}/search/movie?api_key=${API_KEY}&query=${encodeURIComponent(
 				query
 			)}&language=en-US`,
 			{ next: { revalidate: 300 } }
 		);
-		if (!response.ok) throw new Error("Failed to search movies");
 		const data = await response.json();
 		return data.results as Movie[];
 	} catch (error) {
@@ -117,29 +138,28 @@ export async function searchMovies(query: string) {
 }
 
 export async function getMovieDetails(movieId: number) {
+	if (!movieId || isNaN(movieId)) return null;
 	try {
-		const response = await fetch(
+		const response = await fetchWithRetry(
 			`${API_BASE_URL}/movie/${movieId}?api_key=${API_KEY}&language=en-US`,
 			{
 				next: { revalidate: 3600 },
 			}
 		);
-		if (!response.ok) throw new Error("Failed to fetch movie details");
 		const data = await response.json();
 		return data as MovieDetails;
 	} catch (error) {
-		console.error("Error fetching movie details:", error);
+		console.error(`Error fetching movie details for ID ${movieId}:`, error);
 		return null;
 	}
 }
 
 export async function getMoviesByGenre(genreId: number) {
 	try {
-		const response = await fetch(
+		const response = await fetchWithRetry(
 			`${API_BASE_URL}/discover/movie?api_key=${API_KEY}&with_genres=${genreId}&language=en-US&sort_by=popularity.desc`,
 			{ next: { revalidate: 3600 } }
 		);
-		if (!response.ok) throw new Error("Failed to fetch movies by genre");
 		const data = await response.json();
 		return data.results as Movie[];
 	} catch (error) {
