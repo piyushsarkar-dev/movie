@@ -4,12 +4,23 @@ const IMAGE_BASE_URL = process.env.NEXT_PUBLIC_TMDB_IMAGE_BASE_URL;
 const BACKDROP_BASE_URL = process.env.NEXT_PUBLIC_TMDB_BACKDROP_BASE_URL;
 const VIDSRC_BASE_URL = process.env.NEXT_PUBLIC_VIDSRC_BASE_URL;
 
+if (!API_BASE_URL || !API_KEY) {
+	console.error(
+		"⚠️ TMDB API configuration is missing. Please check your .env file."
+	);
+}
+
 // Helper for robust fetching with retry logic
 async function fetchWithRetry(
 	url: string,
 	options: RequestInit = {},
 	retries = 3
 ) {
+	if (!API_KEY) {
+		console.error("❌ API Key is missing, skipping fetch.");
+		throw new Error("API Key is missing");
+	}
+
 	try {
 		const response = await fetch(url, {
 			...options,
@@ -17,9 +28,20 @@ async function fetchWithRetry(
 				...options.headers,
 				"Content-Type": "application/json",
 			},
+			cache: "no-store", // Ensure fresh data for dynamic content
 		});
 
 		if (!response.ok) {
+			// Handle specific HTTP errors
+			if (response.status === 401) {
+				throw new Error("Unauthorized: Invalid API Key");
+			}
+			if (response.status === 404) {
+				throw new Error("Resource not found");
+			}
+			if (response.status === 429) {
+				throw new Error("Rate limit exceeded");
+			}
 			throw new Error(`HTTP error! status: ${response.status}`);
 		}
 
@@ -27,11 +49,12 @@ async function fetchWithRetry(
 	} catch (error) {
 		if (retries > 0) {
 			console.warn(
-				`⚠️ Request failed, retrying... (${retries} attempts left)`
+				`⚠️ Request failed, retrying... (${retries} attempts left). Error: ${error}`
 			);
 			await new Promise((resolve) => setTimeout(resolve, 1000));
 			return fetchWithRetry(url, options, retries - 1);
 		}
+		console.error("❌ Fetch failed after retries:", error);
 		throw error;
 	}
 }

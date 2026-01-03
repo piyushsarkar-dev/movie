@@ -51,8 +51,7 @@ export function MoviePlayer({ movie }: MoviePlayerProps) {
 							src={embedUrl}
 							className="w-full h-full border-0"
 							allowFullScreen
-							allow="autoplay; encrypted-media"
-							sandbox="allow-forms allow-pointer-lock allow-same-origin allow-scripts allow-presentation"
+							allow="autoplay; encrypted-media; picture-in-picture"
 							title={movie.title}
 						/>
 					)}
