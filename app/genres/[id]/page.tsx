@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation"
 import { Navbar } from "@/components/navbar"
-import { MovieCard } from "@/components/movie-card"
 import { getMoviesByGenre, getGenres } from "@/lib/tmdb"
+import { InfiniteMovieGrid } from "@/components/infinite-movie-grid"
 import type { Metadata } from "next"
 
 interface GenrePageProps {
@@ -47,22 +47,12 @@ export default async function GenreMoviesPage({ params }: GenrePageProps) {
           <div className="mb-12">
             <h1 className="text-4xl font-bold text-foreground mb-3">{currentGenre.name}</h1>
             <p className="text-muted-foreground">
-              Showing {movies.length} movies in the {currentGenre.name} genre
+              Showing movies in the {currentGenre.name} genre
             </p>
           </div>
 
           {/* Movies Grid */}
-          {movies.length > 0 ? (
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-              {movies.map((movie) => (
-                <MovieCard key={movie.id} movie={movie} />
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-16">
-              <p className="text-muted-foreground">No movies found in this genre.</p>
-            </div>
-          )}
+          <InfiniteMovieGrid initialMovies={movies} genreId={genreId} />
         </div>
       </main>
     </>

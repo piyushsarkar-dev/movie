@@ -1,4 +1,5 @@
 import { HeroSection } from "@/components/hero-section";
+import { InfiniteScrollMovies } from "@/components/infinite-scroll-movies";
 import { MovieSection } from "@/components/movie-section";
 import { Navbar } from "@/components/navbar";
 import { TermsModal } from "@/components/terms-modal";
@@ -36,10 +37,13 @@ export default async function Home() {
 						title="Latest Releases"
 						movies={latestMovies.slice(0, 12)}
 					/>
-					<MovieSection
-						title="Popular Movies"
-						movies={popularMovies.slice(0, 12)}
-					/>
+
+					<div className="space-y-6">
+						<h2 className="text-2xl font-bold text-foreground">
+							Popular Movies
+						</h2>
+						<InfiniteScrollMovies initialMovies={popularMovies} />
+					</div>
 				</div>
 			</main>
 		</>

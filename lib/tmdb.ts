@@ -5,7 +5,11 @@ const BACKDROP_BASE_URL = process.env.NEXT_PUBLIC_TMDB_BACKDROP_BASE_URL;
 const VIDSRC_BASE_URL = process.env.NEXT_PUBLIC_VIDSRC_BASE_URL;
 
 // Helper for robust fetching with retry logic
-async function fetchWithRetry(url: string, options: RequestInit = {}, retries = 3) {
+async function fetchWithRetry(
+	url: string,
+	options: RequestInit = {},
+	retries = 3
+) {
 	try {
 		const response = await fetch(url, {
 			...options,
@@ -22,7 +26,9 @@ async function fetchWithRetry(url: string, options: RequestInit = {}, retries = 
 		return response;
 	} catch (error) {
 		if (retries > 0) {
-			console.warn(`⚠️ Request failed, retrying... (${retries} attempts left)`);
+			console.warn(
+				`⚠️ Request failed, retrying... (${retries} attempts left)`
+			);
 			await new Promise((resolve) => setTimeout(resolve, 1000));
 			return fetchWithRetry(url, options, retries - 1);
 		}
@@ -88,10 +94,10 @@ export async function getLatestMovies() {
 	}
 }
 
-export async function getPopularMovies() {
+export async function getPopularMovies(page: number = 1) {
 	try {
 		const response = await fetchWithRetry(
-			`${API_BASE_URL}/movie/popular?api_key=${API_KEY}&language=en-US&page=1`,
+			`${API_BASE_URL}/movie/popular?api_key=${API_KEY}&language=en-US&page=${page}`,
 			{
 				next: { revalidate: 3600 },
 			}
@@ -120,13 +126,13 @@ export async function getGenres() {
 	}
 }
 
-export async function searchMovies(query: string) {
+export async function searchMovies(query: string, page = 1) {
 	if (!query.trim()) return [];
 	try {
 		const response = await fetchWithRetry(
 			`${API_BASE_URL}/search/movie?api_key=${API_KEY}&query=${encodeURIComponent(
 				query
-			)}&language=en-US`,
+			)}&language=en-US&page=${page}`,
 			{ next: { revalidate: 300 } }
 		);
 		const data = await response.json();
@@ -154,10 +160,10 @@ export async function getMovieDetails(movieId: number) {
 	}
 }
 
-export async function getMoviesByGenre(genreId: number) {
+export async function getMoviesByGenre(genreId: number, page = 1) {
 	try {
 		const response = await fetchWithRetry(
-			`${API_BASE_URL}/discover/movie?api_key=${API_KEY}&with_genres=${genreId}&language=en-US&sort_by=popularity.desc`,
+			`${API_BASE_URL}/discover/movie?api_key=${API_KEY}&with_genres=${genreId}&language=en-US&sort_by=popularity.desc&page=${page}`,
 			{ next: { revalidate: 3600 } }
 		);
 		const data = await response.json();

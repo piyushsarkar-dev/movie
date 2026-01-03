@@ -69,9 +69,11 @@ export default async function MoviePage({ params }: MoviePageProps) {
 						{/* Sidebar - Related Movies */}
 						<div className="md:col-span-1">
 							<RelatedMovies
-								movies={relatedMovies
-									.filter((m) => m.id !== movieId)
-									.slice(0, 8)}
+								initialMovies={relatedMovies.filter(
+									(m) => m.id !== movieId
+								)}
+								genreId={movie.genres[0]?.id || 0}
+								currentMovieId={movieId}
 							/>
 						</div>
 					</div>

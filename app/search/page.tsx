@@ -1,6 +1,6 @@
 import { Navbar } from "@/components/navbar"
-import { MovieCard } from "@/components/movie-card"
 import { searchMovies } from "@/lib/tmdb"
+import { InfiniteSearchGrid } from "@/components/infinite-search-grid"
 import type { Metadata } from "next"
 
 interface SearchPageProps {
@@ -41,26 +41,10 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
           </div>
 
           {/* Results Grid */}
-          {results.length > 0 ? (
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-              {results.map((movie) => (
-                <MovieCard key={movie.id} movie={movie} />
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-16">
-              <p className="text-xl text-muted-foreground mb-4">
-                {query ? "No movies found matching your search." : "Enter a movie title to search."}
-              </p>
-              {query && (
-                <p className="text-sm text-muted-foreground">
-                  Try searching for a different title or browse our popular movies on the home page.
-                </p>
-              )}
-            </div>
-          )}
+          <InfiniteSearchGrid initialMovies={results} query={query} />
         </div>
       </main>
     </>
   )
 }
+
