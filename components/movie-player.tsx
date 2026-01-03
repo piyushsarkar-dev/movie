@@ -1,7 +1,6 @@
 "use client";
 
 import type { MovieDetails } from "@/lib/tmdb";
-import { getVidSrcUrl } from "@/lib/tmdb";
 import { Play } from "lucide-react";
 import { useState } from "react";
 
@@ -12,7 +11,8 @@ interface MoviePlayerProps {
 export function MoviePlayer({ movie }: MoviePlayerProps) {
 	const [showPlayer, setShowPlayer] = useState(false);
 
-	const embedUrl = getVidSrcUrl(movie.id, "movie");
+	// Use our internal proxy route instead of direct external URL
+	const proxyUrl = `/api/stream?movieId=${movie.id}`;
 
 	return (
 		<div className="relative w-full bg-card">
@@ -48,10 +48,12 @@ export function MoviePlayer({ movie }: MoviePlayerProps) {
 						</div>
 					) : (
 						<iframe
-							src={embedUrl}
+							src={proxyUrl}
 							className="w-full h-full border-0"
 							allowFullScreen
 							allow="autoplay; encrypted-media; picture-in-picture"
+							// Strict sandbox to prevent popups and top-level navigation
+							sandbox="allow-forms allow-scripts allow-same-origin allow-presentation"
 							title={movie.title}
 						/>
 					)}
