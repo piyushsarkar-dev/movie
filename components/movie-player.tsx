@@ -67,9 +67,9 @@ export function MoviePlayer({ movie }: MoviePlayerProps) {
 							src={streamUrl}
 							className="w-full h-full border-0"
 							allowFullScreen
-							allow="autoplay; encrypted-media; picture-in-picture"
-							// Strict sandbox to prevent popups and top-level navigation
-							sandbox="allow-forms allow-scripts allow-same-origin allow-presentation"
+							allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+							referrerPolicy="no-referrer"
+							loading="eager"
 							title={movie.title}
 						/>
 					)}
