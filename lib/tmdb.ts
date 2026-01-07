@@ -28,7 +28,6 @@ async function fetchWithRetry(
 				...options.headers,
 				"Content-Type": "application/json",
 			},
-			cache: "no-store", // Ensure fresh data for dynamic content
 		});
 
 		if (!response.ok) {

@@ -10,16 +10,39 @@ export async function GET(request: NextRequest) {
 
 	const baseUrl =
 		process.env.NEXT_PUBLIC_VIDSRC_BASE_URL || "https://vidsrc.xyz/embed";
-	// Ensure no double slashes if env var has trailing slash
-	const cleanBaseUrl = baseUrl.endsWith("/") ? baseUrl.slice(0, -1) : baseUrl;
-	const targetUrl = `${cleanBaseUrl}/movie/${movieId}`;
+
+	const buildTargetUrl = (base: string, id: string) => {
+		const cleanBase = base.endsWith("/") ? base.slice(0, -1) : base;
+
+		// Support template-style envs, e.g. https://vidsrc.cc/v2/embed/movie/{id}
+		if (cleanBase.includes("{id}")) {
+			return cleanBase.replaceAll("{id}", id);
+		}
+
+		// vidsrc.cc: /movie/:id is 404; embed endpoints work.
+		if (cleanBase.includes("vidsrc.cc")) {
+			if (cleanBase.includes("/v2/embed/movie"))
+				return `${cleanBase}/${id}`;
+			if (cleanBase.includes("/v2/embed"))
+				return `${cleanBase}/movie/${id}`;
+			if (cleanBase.includes("/embed/movie")) return `${cleanBase}/${id}`;
+			if (cleanBase.includes("/embed")) return `${cleanBase}/movie/${id}`;
+			return `${cleanBase}/v2/embed/movie/${id}`;
+		}
+
+		// Generic handling
+		if (cleanBase.endsWith("/movie")) return `${cleanBase}/${id}`;
+		return `${cleanBase}/movie/${id}`;
+	};
+
+	const targetUrl = buildTargetUrl(baseUrl, movieId);
 
 	try {
 		const response = await fetch(targetUrl, {
 			headers: {
 				"User-Agent":
 					"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-				Referer: "https://vidsrc.xyz/",
+				Referer: new URL(targetUrl).origin + "/",
 			},
 		});
 
@@ -79,18 +102,25 @@ export async function GET(request: NextRequest) {
 		const headers = new Headers();
 		headers.set("Content-Type", "text/html");
 
-		// CSP: Allow scripts/frames from vidsrc and self, but block others.
+		// CSP: Allow scripts/frames from the configured provider origin and self.
 		// Note: We use * for media/connect because video CDNs vary and rotate.
-		// We strictly limit scripts and frames to prevent ad networks.
 		headers.set(
 			"Content-Security-Policy",
-			"default-src 'self' https://vidsrc.xyz https://vidsrc.to; " +
-				"script-src 'self' 'unsafe-inline' https://vidsrc.xyz https://vidsrc.to; " +
-				"style-src 'self' 'unsafe-inline' https://vidsrc.xyz https://vidsrc.to; " +
+			"default-src 'self' " +
+				origin +
+				"; " +
+				"script-src 'self' 'unsafe-inline' " +
+				origin +
+				"; " +
+				"style-src 'self' 'unsafe-inline' " +
+				origin +
+				"; " +
 				"img-src 'self' data: https:; " +
 				"media-src * blob:; " +
 				"connect-src *; " +
-				"frame-src 'self' https://vidsrc.xyz https://vidsrc.to; " +
+				"frame-src 'self' " +
+				origin +
+				"; " +
 				"frame-ancestors 'self';"
 		);
 
