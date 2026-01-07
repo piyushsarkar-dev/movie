@@ -11,8 +11,24 @@ interface MoviePlayerProps {
 export function MoviePlayer({ movie }: MoviePlayerProps) {
 	const [showPlayer, setShowPlayer] = useState(false);
 
-	// Use our internal proxy route instead of direct external URL
-	const proxyUrl = `/api/stream?movieId=${movie.id}`;
+	// Use direct URL from environment variable
+	const baseUrl =
+		process.env.NEXT_PUBLIC_VIDSRC_BASE_URL || "https://vidsrc.xyz/embed";
+
+	// Construct the correct stream URL
+	const getStreamUrl = (base: string, id: number) => {
+		const cleanBase = base.endsWith("/") ? base.slice(0, -1) : base;
+
+		// Specific handling for vidsrc.cc which needs /v2/embed
+		if (cleanBase.includes("vidsrc.cc") && !cleanBase.includes("embed")) {
+			return `${cleanBase}/v2/embed/movie/${id}`;
+		}
+
+		// Default behavior: append /movie/{id}
+		return `${cleanBase}/movie/${id}`;
+	};
+
+	const streamUrl = getStreamUrl(baseUrl, movie.id);
 
 	return (
 		<div className="relative w-full bg-card">
@@ -48,7 +64,7 @@ export function MoviePlayer({ movie }: MoviePlayerProps) {
 						</div>
 					) : (
 						<iframe
-							src={proxyUrl}
+							src={streamUrl}
 							className="w-full h-full border-0"
 							allowFullScreen
 							allow="autoplay; encrypted-media; picture-in-picture"
