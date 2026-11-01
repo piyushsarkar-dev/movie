@@ -132,3 +132,11 @@ Your movie streaming site will be live in minutes!
 ---
 
 _Disclaimer: This project is for educational purposes only. The author does not endorse or promote piracy. Please respect copyright laws in your country._
+
+## Local API configuration
+
+Copy .env.example to .env.local and replace YOUR_API_KEY with your own TMDB key. Never commit .env.local or real credentials. Revoke any previously exposed key before using a replacement.
+
+NEXT_PUBLIC_ variables are included in browser code; they are not private secrets. Keep private credentials behind server-side endpoints.
+
+After the security history rewrite, clone the repository again. Do not merge or push branches based on the old history, as that can restore exposed credentials.
