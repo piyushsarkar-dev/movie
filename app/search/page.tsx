@@ -15,7 +15,8 @@ export async function generateMetadata({
 	const params = await searchParams;
 	const query = params.q || "";
 	return {
-		title: `Search Results for "${query}" - Free Streaming`,
+		robots: { index: false, follow: true },
+		title: `Search Results for "${query}"`,
 		description: `Search results for movies matching "${query}"`,
 	};
 }

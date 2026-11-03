@@ -1,3 +1,4 @@
+import { jsonLd, siteUrl } from "@/lib/seo";
 import { MovieInfo } from "@/components/movie-info";
 import { MoviePlayer } from "@/components/movie-player";
 import { Navbar } from "@/components/navbar";
@@ -25,7 +26,8 @@ export async function generateMetadata({
 	}
 
 	return {
-		title: `${movie.title} - Watch Online | Free Streaming`,
+		title: `${movie.title}${movie.release_date ? ` (${movie.release_date.slice(0, 4)})` : ""} — Movie Details`,
+		alternates: { canonical: `/movie/${movie.id}` },
 		description: movie.overview || "Watch this movie online for free",
 		openGraph: {
 			title: movie.title,
@@ -34,6 +36,7 @@ export async function generateMetadata({
 				? [getImageUrl(movie.poster_path)]
 				: undefined,
 			type: "video.movie",
+			url: `/movie/${movie.id}`,
 		},
 	};
 }
@@ -55,6 +58,7 @@ export default async function MoviePage({ params }: MoviePageProps) {
 	return (
 		<>
 			<Navbar />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd({ "@context": "https://schema.org", "@type": "Movie", name: movie.title, description: movie.overview, url: `${siteUrl}/movie/${movie.id}`, ...(movie.poster_path ? { image: getImageUrl(movie.poster_path) } : {}), ...(movie.release_date ? { datePublished: movie.release_date } : {}), genre: movie.genres.map(g => g.name), ...(movie.runtime > 0 ? { duration: `PT${movie.runtime}M` } : {}) }) }} />
 			<main className="bg-background min-h-screen">
 				{/* Video Player Section */}
 				<MoviePlayer movie={movie} />

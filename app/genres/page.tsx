@@ -4,7 +4,8 @@ import { getGenres } from "@/lib/tmdb"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Browse Genres - Free Streaming",
+  title: "Browse Movie Genres",
+  alternates: { canonical: "/genres" },
   description: "Browse movies by genre. Find your favorite movies organized by category.",
 }
 

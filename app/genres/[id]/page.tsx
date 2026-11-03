@@ -24,7 +24,8 @@ export async function generateMetadata({
 	}
 
 	return {
-		title: `${genre.name} Movies - Free Streaming`,
+		title: `${genre.name} Movies`,
+		alternates: { canonical: `/genres/${genreId}` },
 		description: `Browse all ${genre.name} movies available on Free Streaming`,
 	};
 }
