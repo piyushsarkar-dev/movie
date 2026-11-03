@@ -22,7 +22,11 @@ export default async function Home() {
 			<TermsModal />
 
 			<main className="bg-background">
-				{/* Hero Section with Featured Movie */}
+				<section className="max-w-7xl mx-auto px-4 pt-8 pb-6">
+                  <h1 className="text-3xl font-bold">Discover your next movie</h1>
+                  <p className="mt-2 text-muted-foreground">Explore trending films, new releases and popular movies. Find ratings, stories and genres in one place.</p>
+                </section>
+                {/* Hero Section with Featured Movie */}
 				{trendingMovies.length > 0 && (
 					<HeroSection movies={trendingMovies.slice(0, 10)} />
 				)}

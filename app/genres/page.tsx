@@ -1,11 +1,11 @@
+import { pageMetadata } from "@/lib/seo";
 import { Navbar } from "@/components/navbar"
 import { GenreGrid } from "@/components/genre-grid"
 import { getGenres } from "@/lib/tmdb"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Browse Genres - Free Streaming",
-  description: "Browse movies by genre. Find your favorite movies organized by category.",
+  ...pageMetadata("Browse Movie Genres", "Browse movies by genre. Discover action, comedy, drama and more.", "/genres"),
 }
 
 export default async function GenresPage() {

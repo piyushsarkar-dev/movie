@@ -20,7 +20,7 @@ export function MovieCard({ movie }: MovieCardProps) {
 						alt={movie.title}
 						fill
 						className="object-cover group-hover:scale-110 transition-all duration-300 ease-in-out"
-						sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+						sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 17vw"
 					/>
 					{/* Overlay on hover */}
 					<div className="absolute inset-0 bg-gradient-overlay opacity-0 group-hover:opacity-100 transition-all duration-300 ease-in-out flex flex-col justify-end p-4">
@@ -48,7 +48,7 @@ export function MovieCard({ movie }: MovieCardProps) {
 									★ {movie.vote_average.toFixed(1)}
 								</span>
 								<span className="text-sm text-muted-foreground">
-									{new Date(movie.release_date).getFullYear()}
+									{movie.release_date ? movie.release_date.slice(0, 4) : "Release date TBA"}
 								</span>
 							</div>
 						</div>

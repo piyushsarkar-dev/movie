@@ -68,9 +68,9 @@ export function HeroSection({ movies }: HeroSectionProps) {
 								<div className="absolute inset-0 flex items-center px-4 sm:px-8">
 									<div className="max-w-2xl space-y-6">
 										<div>
-											<h1 className="text-3xl sm:text-4xl md:text-6xl font-bold text-foreground text-balance animate-in fade-in slide-in-from-bottom-4 duration-1000">
+											<h2 className="text-3xl sm:text-4xl md:text-6xl font-bold text-foreground text-balance animate-in fade-in slide-in-from-bottom-4 duration-1000">
 												{movie.title}
-											</h1>
+											</h2>
 											<div className="flex items-center gap-4 mt-4 text-muted-foreground animate-in fade-in slide-in-from-bottom-5 duration-1000 delay-100 text-sm sm:text-base">
 												<span className="flex items-center gap-1">
 													<span className="text-primary">

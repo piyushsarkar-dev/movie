@@ -1,8 +1,5 @@
 const API_BASE_URL = process.env.NEXT_PUBLIC_TMDB_BASE_URL;
 const API_KEY = process.env.NEXT_PUBLIC_TMDB_API_KEY;
-const IMAGE_BASE_URL = process.env.NEXT_PUBLIC_TMDB_IMAGE_BASE_URL;
-const BACKDROP_BASE_URL = process.env.NEXT_PUBLIC_TMDB_BACKDROP_BASE_URL;
-const VIDSRC_BASE_URL = process.env.NEXT_PUBLIC_VIDSRC_BASE_URL;
 
 if (!API_BASE_URL || !API_KEY) {
 	console.error(
@@ -166,7 +163,7 @@ export async function searchMovies(query: string, page = 1) {
 }
 
 export async function getMovieDetails(movieId: number) {
-	if (!movieId || isNaN(movieId)) return null;
+	if (!Number.isSafeInteger(movieId) || movieId <= 0) return null;
 	try {
 		const response = await fetchWithRetry(
 			`${API_BASE_URL}/movie/${movieId}?api_key=${API_KEY}&language=en-US`,

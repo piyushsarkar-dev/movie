@@ -1,4 +1,5 @@
 import { InfiniteMovieGrid } from "@/components/infinite-movie-grid";
+import { pageMetadata } from "@/lib/seo";
 import { Navbar } from "@/components/navbar";
 import { getGenres, getMoviesByGenre } from "@/lib/tmdb";
 import type { Metadata } from "next";
@@ -24,8 +25,7 @@ export async function generateMetadata({
 	}
 
 	return {
-		title: `${genre.name} Movies - Free Streaming`,
-		description: `Browse all ${genre.name} movies available on Free Streaming`,
+		...pageMetadata(`${genre.name} Movies`, `Explore ${genre.name} movies, ratings and details.`, `/genres/${genreId}`),
 	};
 }
 

@@ -1,3 +1,4 @@
+import Link from "next/link"
 import type { MovieDetails } from "@/lib/tmdb"
 
 interface MovieInfoProps {
@@ -49,12 +50,10 @@ export function MovieInfo({ movie }: MovieInfoProps) {
           <h3 className="text-sm font-semibold text-primary uppercase tracking-wider mb-3">Genres</h3>
           <div className="flex flex-wrap gap-2">
             {movie.genres.map((genre) => (
-              <span
-                key={genre.id}
+              <Link href={`/genres/${genre.id}`} key={genre.id}
                 className="px-4 py-2 bg-card border border-border rounded-full text-foreground text-sm hover:bg-primary/10 transition-all duration-300 ease-in-out cursor-pointer"
               >
-                {genre.name}
-              </span>
+                {genre.name}</Link>
             ))}
           </div>
         </section>

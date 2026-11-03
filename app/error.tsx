@@ -1,5 +1,6 @@
 "use client"
 
+import Link from "next/link"
 import { useEffect } from "react"
 import { Button } from "@/components/ui/button"
 
@@ -23,9 +24,7 @@ export default function Error({ error, reset }: { error: Error & { digest?: stri
           <Button onClick={() => reset()} className="bg-primary hover:bg-primary/90">
             Try Again
           </Button>
-          <Button variant="outline" onClick={() => (window.location.href = "/")}>
-            Go Home
-          </Button>
+          <Button variant="outline" asChild><Link href="/">Go Home</Link></Button>
         </div>
       </div>
     </main>
