@@ -1,142 +1,106 @@
-# Free Streaming - Watch Movies Online
+# Movie — Next.js Movie Discovery & Streaming UI
 
-A modern, responsive, and feature-rich movie streaming application built with Next.js 14, Tailwind CSS, and Shadcn UI. This project allows users to browse trending, popular, and latest movies, search for their favorites with smart suggestions, and watch them instantly for free.
+A responsive **Next.js 16, React 19 and TypeScript movie web app** powered by TMDB. Discover trending films, explore genres, search movie titles and view ratings, release dates and related movies in a dark, mobile-friendly interface.
 
-![Home Page](/public/p-one.png)
+[Getting started](#getting-started) · [Features](#features) · [SEO and deployment](#seo-and-deployment) · [Contributing](#contributing)
 
-## 📸 Screenshots
+![Movie discovery homepage with featured films and movie grids](public/p-one.png)
 
-### 1. Home Page
+## Features
 
-The landing page featuring a dynamic hero slider, trending movies, and infinite scrolling lists.
-![Home Page](/public/p-one.png)
+- Trending, popular and newly released movie collections.
+- Debounced title search and paginated infinite scrolling.
+- Movie detail pages with overview, ratings, runtime and related titles.
+- Genre browsing with direct links from movie details.
+- Responsive layouts built with Tailwind CSS, shadcn/ui and Radix UI.
+- Canonical metadata, social previews, movie JSON-LD, robots.txt and sitemap.xml.
+- Optional external video embeds; the application does not host video files.
 
-### 2. Smart Search
+## Screenshots
 
-Real-time search suggestions as you type, similar to YouTube, helping you find movies faster.
-![Search Bar](/public/p-two.png)
+| Search suggestions | Search results |
+| --- | --- |
+| ![Movie title suggestions](public/p-two.png) | ![Search results grid](public/p-three.png) |
 
-### 3. Search Results
+![Movie player and detail page](public/p-four.png)
 
-Comprehensive search results grid with infinite scrolling.
-![Search Results](/public/p-three.png)
+## Getting started
 
-### 4. Movie Player & Details
+Use **Node.js 20.9 or newer** and npm. The committed npm lockfile is the supported reproducible installation path.
 
-Full-screen responsive video player with detailed movie information, cast, and related recommendations.
-![Movie Player](/public/p-four.png)
+```sh
+git clone https://github.com/piyushsarkar-dev/movie.git
+cd movie
+npm ci --include=dev
+```
 
-## ✨ Features
+Copy `.env.example` to `.env.local`, then replace `YOUR_API_KEY` with your own TMDB key. On PowerShell:
 
--   **🎥 Unlimited Streaming**: Watch thousands of movies for free without registration.
--   **♾️ Infinite Scrolling**: Browse endless lists of popular and trending movies.
--   **🔍 Smart Search**: Instant search suggestions with debounce for a smooth user experience.
--   **📱 Fully Responsive**: Optimized for all devices - Mobile, Tablet, and Desktop.
--   **⚡ High Performance**: Built on Next.js for lightning-fast page loads and SEO.
--   **🎨 Modern UI**: Beautiful dark-mode interface using Tailwind CSS and Shadcn UI.
+```powershell
+Copy-Item .env.example .env.local
+```
 
-## 🛠️ How It Works
+On macOS/Linux use `cp .env.example .env.local`.
 
-This application aggregates data and content from two primary sources:
+```sh
+npm run dev
+```
 
-1.  **The Movie Database (TMDB) API**: Used to fetch all movie metadata, including titles, descriptions, posters, backdrops, ratings, and cast information.
-2.  **VidSrc API**: Used to embed the video player for streaming the content.
+Open [localhost:3000](http://localhost:3000). Without a valid TMDB key, the app can build but movie collections will be empty.
 
-**Note**: This project does not host any video content. It serves as a search engine and interface for publicly available streams.
+### Configuration
 
-## 🚀 Getting Started
+| Variable | Purpose |
+| --- | --- |
+| `NEXT_PUBLIC_TMDB_API_KEY` | Your TMDB API key; never commit a real value |
+| `NEXT_PUBLIC_TMDB_BASE_URL` | TMDB API origin and version path |
+| `NEXT_PUBLIC_TMDB_IMAGE_BASE_URL` | Poster image base URL |
+| `NEXT_PUBLIC_TMDB_BACKDROP_BASE_URL` | Backdrop image base URL |
+| `NEXT_PUBLIC_VIDSRC_BASE_URL` | External embed provider origin; not a full embed path |
+| `NEXT_PUBLIC_SITE_URL` | Your public production origin, such as `https://movies.example.com` |
 
-Follow these steps to set up the project locally on your machine.
+Use the defaults in `.env.example` for provider URLs. `NEXT_PUBLIC_` values are browser-visible; do not put private credentials in them. `.env.local` is ignored by Git. For private API credentials, move access behind server-only endpoints before deployment.
 
-### Prerequisites
+## Development checks
 
--   **Node.js**: Version 18 or higher.
--   **Package Manager**: npm, pnpm, or bun.
+```sh
+npm run lint
+npm run typecheck
+npm run build
+npm start
+```
 
-### Installation
+Production builds enforce TypeScript checks. GitHub Actions runs the project checks for pull requests and pushes to main.
 
-1.  **Clone the repository**
+## SEO and deployment
 
-    ```bash
-    git clone https://github.com/piyushsarkar-dev/movie.git
-    cd movie
-    ```
+1. Import this repository into your Next.js hosting provider and configure the environment variables.
+2. Set `NEXT_PUBLIC_SITE_URL` to the real HTTPS production origin, without a path. Rebuild after changing it. Local/unconfigured installations are intentionally not indexable.
+3. Verify `/robots.txt`, `/sitemap.xml`, canonical links and social previews on the deployed site.
+4. Verify your domain in Google Search Console, submit `/sitemap.xml`, then inspect representative pages. Account/domain verification must be completed by the site owner.
+5. Keep movie descriptions useful and accurate. Search and AI recommendation rankings are not guaranteed by metadata or keywords.
 
-2.  **Install dependencies**
+The sitemap includes the homepage, genres and the current trending collection; it is not a complete mirror of the TMDB catalogue. Other movie pages can be discovered through normal internal links. Search-result pages use `noindex, follow` to avoid indexing arbitrary queries.
 
-    ```bash
-    npm install
-    # or
-    pnpm install
-    # or
-    bun install
-    ```
+See [Google's SEO starter guide](https://developers.google.com/search/docs/fundamentals/seo-starter-guide) and [Next.js metadata documentation](https://nextjs.org/docs/app/getting-started/metadata-and-og-images).
 
-3.  **Set up Environment Variables**
-    Create a `.env.local` file in the root directory and add the following keys:
+## Project structure
 
-    ```env
-    NEXT_PUBLIC_TMDB_BASE_URL=https://api.themoviedb.org/3
-    NEXT_PUBLIC_TMDB_API_KEY=your_tmdb_api_key_here
-    NEXT_PUBLIC_TMDB_IMAGE_BASE_URL=https://image.tmdb.org/t/p
-    NEXT_PUBLIC_TMDB_BACKDROP_BASE_URL=https://image.tmdb.org/t/p/original
-    NEXT_PUBLIC_VIDSRC_BASE_URL=https://vidsrc.xyz/embed
-    ```
+```text
+app/          App Router pages, metadata routes and server actions
+components/   Movie grids, search, navigation and reusable UI
+lib/          TMDB integration, SEO helpers and utilities
+public/       Images and screenshots
+```
 
-    > **How to get a TMDB API Key:**
-    >
-    > 1. Go to [The Movie Database (TMDB)](https://www.themoviedb.org/).
-    > 2. Sign up for a free account.
-    > 3. Go to Settings > API.
-    > 4. Create a new API key and copy it to your `.env.local` file.
+## Contributing
 
-4.  **Run the development server**
+Open an issue with reproduction steps, expected behaviour and relevant screenshots. Do not include API keys or private logs. For a pull request, describe the user-visible change and run lint, typecheck and build first.
 
-    ```bash
-    npm run dev
-    # or
-    pnpm dev
-    # or
-    bun dev
-    ```
+After the security history rewrite, use a fresh clone. Do not merge or push branches from the old history: that can restore previously exposed credentials. Report sensitive issues privately to the maintainer rather than posting credentials in a public issue.
 
-5.  **Open your browser**
-    Navigate to [http://localhost:3000](http://localhost:3000) to see the app running.
+## Data and attribution
 
-## 🌐 Deployment
+Movie metadata and artwork come from [The Movie Database](https://www.themoviedb.org/). This product uses the TMDB API but is not endorsed or certified by TMDB. External playback depends on third-party availability and permissions; no availability, ad-free playback or content rights are guaranteed.
 
-The easiest way to deploy this app is using **Vercel**.
-
-1.  Push your code to a GitHub repository.
-2.  Go to [Vercel](https://vercel.com) and sign up/login.
-3.  Click **"Add New Project"** and select your repository.
-4.  In the **"Environment Variables"** section, add all the keys from your `.env.local` file.
-5.  Click **"Deploy"**.
-
-Your movie streaming site will be live in minutes!
-
-## 🧰 Tech Stack
-
--   **Framework**: [Next.js 14](https://nextjs.org/) (App Router)
--   **Styling**: [Tailwind CSS](https://tailwindcss.com/)
--   **Components**: [Shadcn UI](https://ui.shadcn.com/)
--   **Icons**: [Lucide React](https://lucide.dev/)
--   **Data Fetching**: Server Actions & Fetch API
-
-## 👨‍💻 Author
-
-**Piyush Sarkar**
-
--   GitHub: [@piyushsarkar-dev](https://github.com/piyushsarkar-dev)
-
----
-
-_Disclaimer: This project is for educational purposes only. The author does not endorse or promote piracy. Please respect copyright laws in your country._
-
-## Local API configuration
-
-Copy .env.example to .env.local and replace YOUR_API_KEY with your own TMDB key. Never commit .env.local or real credentials. Revoke any previously exposed key before using a replacement.
-
-NEXT_PUBLIC_ variables are included in browser code; they are not private secrets. Keep private credentials behind server-side endpoints.
-
-After the security history rewrite, clone the repository again. Do not merge or push branches based on the old history, as that can restore exposed credentials.
+Built by [Piyush Sarkar](https://github.com/piyushsarkar-dev).
