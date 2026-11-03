@@ -29,6 +29,7 @@ export async function generateMetadata({
 		title: `${movie.title}${movie.release_date ? ` (${movie.release_date.slice(0, 4)})` : ""} — Movie Details`,
 		alternates: { canonical: `/movie/${movie.id}` },
 		description: movie.overview || "Watch this movie online for free",
+		twitter: { card: "summary_large_image", title: movie.title, description: movie.overview || undefined, images: [getImageUrl(movie.poster_path)] },
 		openGraph: {
 			title: movie.title,
 			description: movie.overview || undefined,

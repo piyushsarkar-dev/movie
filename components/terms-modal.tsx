@@ -11,6 +11,8 @@ export function TermsModal() {
     // Check if user has accepted terms
     const hasAccepted = localStorage.getItem("termsAccepted")
     if (!hasAccepted) {
+      // Hydrate this browser-only preference after the server render.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setIsOpen(true)
     }
   }, [])
@@ -74,7 +76,7 @@ export function TermsModal() {
             <section>
               <h3 className="font-semibold text-base mb-2">No Liability</h3>
               <p className="text-muted-foreground">
-                We provide this service "as-is" without warranties. We are not responsible for any issues arising from
+                We provide this service &quot;as-is&quot; without warranties. We are not responsible for any issues arising from
                 embedded content or third-party services.
               </p>
             </section>

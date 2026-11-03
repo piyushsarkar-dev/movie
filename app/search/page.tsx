@@ -49,6 +49,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
 
 					{/* Results Grid */}
 					<InfiniteSearchGrid
+                        key={query}
 						initialMovies={results}
 						query={query}
 					/>

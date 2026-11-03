@@ -6,7 +6,7 @@ import type React from "react";
 import "./globals.css";
 
 const _geist = Geist({ subsets: ["latin"] });
-const _geistMono = Geist_Mono({ subsets: ["latin"] });
+const _geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono" });
 
 export const metadata: Metadata = {
   ...pageMetadata("Discover Movies, Ratings & Genres", "Explore trending movies, new releases, ratings and movie details. Search the TMDB-powered catalogue and discover films by genre.", "/"),
@@ -34,7 +34,7 @@ export default function RootLayout({
 			lang="en"
 			className="dark">
 			<body
-				className={`font-sans antialiased bg-background text-foreground`}>
+				className={`${_geist.className} ${_geistMono.variable} antialiased bg-background text-foreground`}>
 				{children}
 				<Analytics />
 			</body>
